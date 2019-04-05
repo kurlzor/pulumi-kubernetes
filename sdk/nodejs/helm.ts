@@ -89,16 +89,18 @@ export namespace v2 {
     export class Chart extends k8s.yaml.CollectionComponentResource {
         /**
          * Create an instance of the specified Helm chart.
+         * @param name Name of the resource
          * @param releaseName Name of the Chart (e.g., nginx-ingress).
          * @param config Configuration options for the Chart.
          * @param opts A bag of options that control this resource's behavior.
          */
         constructor(
+            name: string,
             releaseName: string,
             config: ChartOpts | LocalChartOpts,
             opts?: pulumi.ComponentResourceOptions
         ) {
-            super("kubernetes:helm.sh/v2:Chart", releaseName, config, opts);
+            super("kubernetes:helm.sh/v2:Chart", name, config, opts);
 
             const allConfig = pulumi.output(config);
             const configDeps = Array.from(<Set<pulumi.Resource>>(<any>allConfig).resources());
